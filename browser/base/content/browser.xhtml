@@ -1,0 +1,47 @@
+#filter substitution
+<?xml version="1.0"?>
+# -*- Mode: HTML -*-
+#
+# This Source Code Form is subject to the terms of the Mozilla Public
+# License, v. 2.0. If a copy of the MPL was not distributed with this
+# file, You can obtain one at http://mozilla.org/MPL/2.0/.
+
+<?xml-stylesheet href="chrome://browser/content/browser.css"
+                 type="text/css"?>
+
+# All DTD information is stored in a separate file so that it can be shared by
+# hiddenWindowMac.xhtml.
+<!DOCTYPE window []>
+
+<html id="window"
+        xmlns:html="http://www.w3.org/1999/xhtml"
+        xmlns:xul="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul"
+        xmlns="http://www.w3.org/1999/xhtml"
+        data-l10n-id="browser-main-window"
+        data-l10n-args="{&quot;content-title&quot;:&quot;CONTENTTITLE&quot;}"
+        data-l10n-attrs="data-content-title-default, data-content-title-private, data-title-default, data-title-private"
+        chromemargin="0,-1,-1,-1"
+        tabsintitlebar="true"
+        windowtype="navigator:browser"
+        macanimationtype="document"
+        macnativefullscreen="true"
+        screenX="4" screenY="4"
+        sizemode="normal"
+        retargetdocumentfocus="urlbar-input"
+        scrolling="false"
+        persist="screenX screenY width height sizemode"
+        data-l10n-sync="true">
+<head>
+  <title data-l10n-id="browser-main-window-title"></title>
+<script>
+  /* eslint-env mozilla/browser-window */
+  const { BrowserToolboxLauncher } = ChromeUtils.import("resource://devtools/client/framework/browser-toolbox/Launcher.jsm");
+
+  BrowserToolboxLauncher.init();
+</script>
+</head>
+<html:body xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul">
+  <h1>Dot Browser</h1>
+  <script type="application/javascript" src="chrome://browser/content/browser-shit.js"></script>
+</html:body>
+</html>
