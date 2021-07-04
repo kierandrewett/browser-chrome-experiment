@@ -1,9 +1,20 @@
 const { Services } = ChromeUtils.import("resource://gre/modules/Services.jsm");
 const { E10SUtils } = ChromeUtils.import("resource://gre/modules/E10SUtils.jsm");
 
-window.docShell.treeOwner
-    .QueryInterface(Ci.nsIInterfaceRequestor)
-    .getInterface(Ci.nsIAppWindow).XULBrowserWindow = window.XULBrowserWindow;
+var gStatusText = "";
+
+var gXULBrowserWindow = {
+    QueryInterface: ChromeUtils.generateQI(["nsIXULBrowserWindow"]),
+
+    setOverLink(aStatusText) {
+        if(gStatusText == aStatusText) return;
+
+        console.log(aStatusText);
+        gStatusText = aStatusText;
+    },
+
+    onBeforeLinkTraversal() { }
+};
 
 async function getBrowser(uri) {
     let browser = document.getElementById("webext-panels-browser");
@@ -99,6 +110,18 @@ var gBrowser = {
 };
 
 window.addEventListener("DOMContentLoaded", () => {
+    window.docShell
+        .treeOwner
+        .QueryInterface(Ci.nsIInterfaceRequestor)
+        .getInterface(Ci.nsIAppWindow)
+        .XULBrowserWindow = gXULBrowserWindow;
+
+    window.XULBrowserWindow = window.docShell
+        .treeOwner
+        .QueryInterface(Ci.nsIInterfaceRequestor)
+        .getInterface(Ci.nsIAppWindow)
+        .XULBrowserWindow
+
     getBrowser("https://dothq.co").then(browser => {
         let uri = Services.io.newURI("https://dothq.co");
         let triggeringPrincipal = Services.scriptSecurityManager.getSystemPrincipal();
