@@ -445,13 +445,13 @@ function _setProperties(root, active, themeData) {
             themeData[fallbackProperty]
           );
         }
-        if (processColor) {
+        if (processColor && elem) {
           val = processColor(val, elem, propertyOverrides);
         } else {
           val = _rgbaToString(val);
         }
       }
-      _setProperty(elem, active, cssVarName, val);
+      if(elem) _setProperty(elem, active, cssVarName, val);
     }
   }
 }

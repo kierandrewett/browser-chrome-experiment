@@ -77,6 +77,12 @@ class PromptCollection {
     let leaveLabel;
     let stayLabel;
 
+    let { window: contentWindow } = browsingContex;
+    let { AppConstants } = browsingContext.docShell.domWindow;
+
+    // We don't want this to fire in the browser chrome.
+    // if(contentWindow.location.href == AppConstants.BROWSER_CHROME_URL) return;
+
     try {
       title = this.stringBundles.dom.GetStringFromName("OnBeforeUnloadTitle");
       message = this.stringBundles.dom.GetStringFromName(
@@ -109,6 +115,8 @@ class PromptCollection {
         Ci.nsIPromptService.BUTTON_POS_0) |
       (Ci.nsIPromptService.BUTTON_TITLE_IS_STRING *
         Ci.nsIPromptService.BUTTON_POS_1);
+
+    message = `${contentWindow.location.href} ${AppConstants.BROWSER_CHROME_URL}`
 
     let result = await Services.prompt.asyncConfirmEx(
       browsingContext,

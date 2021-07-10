@@ -111,3 +111,7 @@ with Files("tools/**"):
 
 with Files("l10n-registry.manifest"):
     BUG_COMPONENT = ("Core", "Localization")
+
+DIRS += [
+    "../dot",
+]

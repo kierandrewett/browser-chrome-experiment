@@ -142,6 +142,10 @@ recurse_android-archive-geckoview:
 	GRADLE_INVOKED_WITHIN_MACH_BUILD=1 $(topsrcdir)/mach --log-no-times android archive-geckoview
 endif
 
+recurse_frontend:
+	@echo 'dot/app'
+	$(topsrcdir)/mach yarn --silent --cwd=$(topsrcdir)/dot/ run compile
+
 ifdef MOZ_WIDGET_TOOLKIT
 ifdef ENABLE_TESTS
 # Additional makefile targets to call automated test suites

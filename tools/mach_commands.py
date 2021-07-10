@@ -484,6 +484,26 @@ class NodeCommands(MachCommandBase):
             ensure_exit_code=False,  # Don't throw on non-zero exit code.
         )
 
+    @Command(
+        "yarn",
+        category="devenv",
+        description="Run the yarn executable from the NodeJS used for building.",
+    )
+    @CommandArgument("args", nargs=argparse.REMAINDER)
+    def yarn(self, args):
+        from mozbuild.nodeutil import find_yarn_executable
+
+        # Avoid logging the command
+        self.log_manager.terminal_handler.setLevel(logging.CRITICAL)
+
+        yarn_path, _ = find_yarn_executable()
+
+        return self.run_process(
+            [yarn_path] + args,
+            pass_thru=True,  # Avoid eating yarn output/error messages
+            ensure_exit_code=False,  # Don't throw on non-zero exit code.
+        )
+
 
 def logspam_create_parser(subcommand):
     # Create the logspam command line parser.

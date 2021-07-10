@@ -15,7 +15,7 @@ from six import PY3
 
 NODE_MIN_VERSION = StrictVersion("10.23.1")
 NPM_MIN_VERSION = StrictVersion("6.14.10")
-
+YARN_MIN_VERSION = StrictVersion("1.15.2")
 
 def find_node_paths():
     """Determines the possible paths for node executables.
@@ -112,6 +112,11 @@ def find_npm_executable(min_version=NPM_MIN_VERSION):
     could not be resolved.
     """
     return find_executable(["npm"], min_version, True)
+
+def find_yarn_executable():
+    """Find yarn executable to run frontend build.
+    """
+    return find_executable(["yarn"], YARN_MIN_VERSION, True)
 
 
 def find_executable(names, min_version, use_node_for_version_check=False):
